@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Garage25.Models.Vehicle>
+
+@{
+    ViewBag.Title = "Garage 2.5";
+}
+
+
+<div ng-controller="VehiclesController">
+
+    <h3></h3>
+
+    <p>
+        <div class="form-horizontal">
+            <h3>Detailed Vehicle List</h3>
+            @Html.ActionLink("Create New Vehicle", "Create")
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+
+                <div class="col-md-10">
+                    Vehicle Type: <select class="selectVehicleType" ng-model="search.vehicleTypeId">
+                        <option value="">All</option>
+                        <option ng-repeat="vehicleType in vehicleTypes" value="{{vehicleType.vehicleTypeId}}">{{vehicleType.typeDes}}</option>
+
+                    </select>
+                    Registration No.: <input type="text" value="" ng-model="search.regNo" />
+                </div>
+            </div>
+        </div>
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                First Name
+            </th>
+            <th>
+                Type Description
+            </th>
+            <th>
+                Registration No.
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Color)
+            </th>
+            <th></th>
+        </tr>
+
+        <tr ng-repeat="vehicle in vehicles | filter:search:strict">
+                <td>
+                    {{vehicle.owner.fname}}
+                </td>
+                <td>
+                    {{vehicle.vehicleType.typeDes}}
+                </td>
+                <td>
+                    {{vehicle.regNo}}
+                </td>
+                <td>
+                    {{vehicle.brand}}
+                    @*
+                    @Html.DisplayFor(modelItem => item.Brand)
+                        *@
+                </td>
+                <td>
+                    {{vehicle.color}}
+                    
+                </td>
+                <td>
+                    <a href="/Vehicles/Edit/{{vehicle.vehicleId}}">Edit</a> |
+                    <a href="/Vehicles/Details/{{vehicle.vehicleId}}">Details</a> |
+                    <a href="/Vehicles/Delete/{{vehicle.vehicleId}}">Delete</a>
+                </td>
+            </tr>
+
+    </table>
+</div>
